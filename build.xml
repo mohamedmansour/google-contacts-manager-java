@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+
+<project name="Client" default="build.client">
+	<!--**************************************************
+		PRE SETUP "MUST EDIT"
+	    **************************************************-->
+	<!-- Source file location -->
+	<property name="client.src.location" location="src"/>
+	<!-- JAR Files Location -->
+	<property name="client.lib.location" location="lib"/>
+	<!-- Main Class execute -->
+	<property name="client.main" value="Main"/>
+	<!-- Main Class execute -->
+	<property name="client.jar.name" value="GoogleContactsViewer"/>
+
+
+	<!-- 
+	
+		YOU DO NOT NEED TO EDIT THESE UNLESS YOU WANT TO
+		
+	-->
+	<!-- DEBUG Status -->
+	<property name="debug" value="on" />
+	<!-- DEPRECATION Status -->
+	<property name="deprecation" value="off" />
+	<!-- JAVA Source Version -->
+	<property name="compile.version" value="1.5" />
+	<!-- JAVA Max Memory -->
+	<property name="compile.memory.max" value="300m"/>
+	<!-- JAVA Initial Memory -->
+	<property name="compile.memory.initial" value="64m"/>
+	<!-- 
+		DO NOT EDIT NEVER!!!!!
+	-->
+	<!-- Compiled soruce location -->
+	<property name="client.bin.location" location="bin"/>
+	<!--Output Location -->
+	<property name="client.output.location" location="output"/>
+	<!--Output LIB Location -->
+	<property name="client.output.lib.location" location="${client.output.location}/lib"/>
+	<!-- Compiled Jar Name -->
+	<property name="client.output.jar" location="${client.output.location}/${client.jar.name}.jar"/>
+	
+	<!--
+		Abstract routine to JAVAC parameters 
+	-->
+	<presetdef name="javac.ns">
+		<javac 
+	        debug="${debug}" 
+	        deprecation="${deprecation}"
+	        includeAntRuntime="off"
+	        memoryInitialSize="${compile.memory.initial}"
+	        memoryMaximumSize="${compile.memory.max}"
+	        fork="true"
+	        failonerror="true"
+	        source="${compile.version}"
+	        target="${compile.version}"
+	        taskname="javac">
+		</javac>
+	</presetdef>
+	
+	<!--
+		Cleans client
+	-->
+	<target name="clean.client" description="Cleans client">
+		<delete dir="${client.output.location}" quiet="true"/>
+		<delete dir="${client.bin.location}" quiet="true"/>
+	</target>
+	
+	<!--
+		Prepares Output
+	-->
+	<target name="prepare.output" description="Prepares Output">
+		<mkdir dir="${client.bin.location}"/>
+		<mkdir dir="${client.output.location}"/>
+		<mkdir dir="${client.output.lib.location}"/>
+		<copy todir="${client.output.lib.location}">
+			<fileset dir="${client.lib.location}"/>
+		</copy>
+	</target>
+
+	<!--
+		To JAR the class files in the bin folder
+		Includes the librarys as well!
+	-->
+	<path id="lib.path">
+		<fileset dir="${client.output.lib.location}" includes="**/*.jar" />
+	</path>	
+	
+	<!--
+		Compiles source files
+	-->
+	<target name="compile.client" depends="clean.client, prepare.output" description="Compiles client">
+		<javac.ns 
+	        destdir="${client.bin.location}"
+	        classpathref="lib.path">
+			<src path="${client.src.location}"/>
+		</javac.ns>
+	</target>
+
+	<!--
+		To JAR the class files in the bin folder
+		Includes the librarys as well!
+	-->
+	<target name="build.client" depends="compile.client">
+		<!--
+			Classpath reference location
+		-->
+		<manifestclasspath property="client.manifest" jarfile="${client.output.jar}">
+			<classpath refid="lib.path" />
+		</manifestclasspath>
+		
+		<!--
+			Lets JAR IT
+		-->
+		<jar jarfile="${client.output.jar}">
+			<fileset dir="${client.bin.location}" />
+			<manifest>
+				<attribute name="Main-Class" value="${client.main}"/>
+				<attribute name="Class-Path" value="${client.manifest}"/>
+			</manifest>
+		</jar>
+	</target>
+</project>

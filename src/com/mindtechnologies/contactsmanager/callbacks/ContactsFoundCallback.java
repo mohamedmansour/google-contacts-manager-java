@@ -1,3 +1,4 @@
+package com.mindtechnologies.contactsmanager.callbacks;
 import java.util.List;
 
 import com.google.gdata.data.contacts.ContactEntry;

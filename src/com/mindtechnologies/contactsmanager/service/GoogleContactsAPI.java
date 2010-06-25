@@ -1,3 +1,5 @@
+package com.mindtechnologies.contactsmanager.service;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import com.google.gdata.client.contacts.ContactsService;
 import com.google.gdata.data.contacts.ContactEntry;
 import com.google.gdata.data.contacts.ContactFeed;
 import com.google.gdata.util.AuthenticationException;
+import com.mindtechnologies.contactsmanager.callbacks.ContactsFoundCallback;
 
 /**
  * Google Contacts API as a singleton.

@@ -1,9 +1,11 @@
+package com.mindtechnologies.contactsmanager.ui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 
 /**
  * Main Frame of the Applicaiton, contains a bunch of Card Layouts so we can
@@ -17,22 +19,20 @@ public class MainFrame extends JFrame {
   private LoginPanel pnlLogin;
   private ContactsPanel pnlContacts;
   
-  // TODO(mohamed): Make this an enum.
-  public static String LOGIN = "login";
-  public static String CONTACTS = "contacts";
+  enum CardType { LOGIN, CONTACTS }
   
   public MainFrame() {
     initComponents();
   }
 
   private void initComponents() {
-    setLayout(new BorderLayout(10,10));
+    setLayout(new BorderLayout());
     cards = new JPanel();
-    cards.setLayout(new CardLayout(5,5));
+    cards.setLayout(new CardLayout());
     pnlLogin = new LoginPanel(this);
-    cards.add(pnlLogin, LOGIN);
+    cards.add(pnlLogin, CardType.LOGIN.toString());
     pnlContacts = new ContactsPanel(this);
-    cards.add(pnlContacts, CONTACTS);
+    cards.add(pnlContacts, CardType.CONTACTS.toString());
     add(cards, BorderLayout.CENTER);
   }
   
@@ -48,8 +48,8 @@ public class MainFrame extends JFrame {
    * Switch to the view.
    * @param view The view to show.
    */
-  public void showView(String view) {
+  public void showView(CardType view) {
     CardLayout cl = (CardLayout)(cards.getLayout());
-    cl.show(cards, view);
+    cl.show(cards, view.toString());
   }
 }

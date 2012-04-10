@@ -3,7 +3,6 @@ package com.mindtechnologies.contactsmanager.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +12,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -24,18 +22,12 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
-import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import au.com.bytecode.opencsv.CSVWriter;
 
-import com.google.gdata.data.contacts.ContactEntry;
-import com.google.gdata.data.extensions.Email;
-import com.google.gdata.data.extensions.PhoneNumber;
-import com.mindtechnologies.contactsmanager.callbacks.ContactsFoundCallback;
-import com.mindtechnologies.contactsmanager.service.GoogleContactsAPI;
 import com.mindtechnologies.contactsmanager.ui.async.AsyncContactsRetrieval;
 
 
@@ -57,6 +49,9 @@ public class ContactsPanel extends JPanel implements ActionListener {
   private TextField txtSearch;
   private JButton btnExport;
   
+  ContactsPanel() {
+    this(null);
+  }
   public ContactsPanel(MainFrame frame) {
     this.frame = frame;
     initComponents();
